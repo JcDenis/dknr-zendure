@@ -234,11 +234,14 @@
             "c40764e8810c9f39",
             "2769376ef77c3075",
             "3fb234c1ae200409",
-            "f1c9618a72c03031"
+            "f1c9618a72c03031",
+            "91ae6c95317eaa91",
+            "9d2379c6342d348f",
+            "f883c7f40dd54b6e"
         ],
         "x": 104,
-        "y": 579,
-        "w": 1522,
+        "y": 639,
+        "w": 1502,
         "h": 142
     },
     {
@@ -259,9 +262,43 @@
             "0fcb199df8ea7a6b"
         ],
         "x": 104,
-        "y": 759,
+        "y": 279,
         "w": 782,
         "h": 82
+    },
+    {
+        "id": "de3b449be3696b9f",
+        "type": "group",
+        "z": "48135a54600713e8",
+        "name": "custom - detail",
+        "style": {
+            "fill": "#6f2fa0",
+            "fill-opacity": "0.05",
+            "label": true
+        },
+        "nodes": [
+            "72566a2e8f8e0fcc",
+            "9838a27cf370aab3",
+            "6adbf4edd2050690",
+            "f1716f9a1110221a",
+            "64226070ffae0dab",
+            "d47f0440253a4247",
+            "7901240e8f0c9641",
+            "5fe77efb8a1e0b2c",
+            "e05cf5155f9dcfd0",
+            "90816590c50872db",
+            "f8f807e0a0d4bc70",
+            "0a5ecfcf8fa10f73",
+            "2369bf87ea59c9ea",
+            "4ca0413e3f52e84b",
+            "080e692d5f55025c",
+            "e20da82ff41a4cb7",
+            "f7066787d032e148"
+        ],
+        "x": 104,
+        "y": 819,
+        "w": 1422,
+        "h": 382
     },
     {
         "id": "df7710b4b2c4e55b",
@@ -382,17 +419,6 @@
         "visible": "true",
         "disabled": "false",
         "groupType": "default"
-    },
-    {
-        "id": "2adb88b6b6de2ca1",
-        "type": "ui-spacer",
-        "group": "117d5289b94a0fc6",
-        "name": "spacer",
-        "tooltip": "",
-        "order": 1,
-        "width": "6",
-        "height": 1,
-        "className": ""
     },
     {
         "id": "887b3087f3dda2eb",
@@ -655,7 +681,8 @@
             "5bc8025f927ac169",
             "20334854d90a941a",
             "6248fde82b3cdbff",
-            "0fcb199df8ea7a6b"
+            "0fcb199df8ea7a6b",
+            "72566a2e8f8e0fcc"
         ],
         "x": 1235,
         "y": 80,
@@ -949,7 +976,8 @@
             "e344ab0a1e1ea77b",
             "5bc8025f927ac169",
             "20334854d90a941a",
-            "6248fde82b3cdbff"
+            "6248fde82b3cdbff",
+            "72566a2e8f8e0fcc"
         ],
         "x": 1135,
         "y": 860,
@@ -1453,7 +1481,7 @@
         "z": "48135a54600713e8",
         "g": "8f8487859d9ae01f",
         "name": "custom - describe",
-        "func": "msg.payload.project = 'dknr-zendure';\n\nmsg.payload.hmi = {\n    'detail': 'Piloter',\n    'add': 'Ajouter',\n    'mqtt': 'Configurer'\n};\n\nmsg.payload.inverter = {\n    'sn': '',\n    'eletricLevel': 0,\n    'packNum': 0,\n    'hyperTmp': 0,\n    'inputLimit': 0,\n    'outputLimit': 0,\n    'acMode': 0,\n    'inverseMaxPower': 1200,\n    'wifiState': false,\n    'solarInputPower': 0,\n    'socSet': 0,\n    'masterSwitch': true,\n    'remainInputTime': 0,\n    'packState': 0,\n    'remainOutTime': 0,\n    'heatState': 0,\n\n    'buzzerSwitch': 0,\n    'hubState': 0,\n};\nmsg.payload.battery = {\n    'sn': '',\n    'inverter': '',\n    'maxVol': 0,\n    'minVol': 0,\n    'totalVol': 0,\n    'maxTemp':0,\n    'socLevel': 0\n}\n\nmsg.payload.label = {\n    'pow': 'Etat',\n    'mode': 'Mode',\n};\nmsg.payload.unit =  {\n    'pow': '',\n    'mode': '',\n};\nmsg.payload.pow =  {\n    '1': '1',\n    '0': '0'\n};\nmsg.payload.mode = {\n    '0': '0',\n    '1': '1',\n};\nglobal.set('icons', {\n    'pow': {\n        '0': 'power-off',\n        '1': 'power-cycle'\n    },\n    'mode': {\n        '0': 'stop',\n        '1': 'play'\n    }\n}, 'memoryOnly');\n\nreturn msg;",
+        "func": "msg.payload.project = 'dknr-zendure';\n\nmsg.payload.hmi = {\n    'detail': 'Piloter',\n    'add': 'Ajouter',\n    'mqtt': 'Configurer'\n};\n\nmsg.payload.inverter = {\n    // For now, we only take Hyper 2000 data.\n    'sn': ['', '', 'Numéro de série'],\n    'electricLevel': [-1, '%', 'Niveau de charge'],\n    'remainOutTime': [-1, 's', 'Temps de décharge restant'],\n    'remainInputTime': [-1, 's', 'Temps de recharge restant'],\n    'socSet': [-1, 'W', 'Limite de puissance de charge'],\n    'inputLimit': [-1, 'W', 'Limite en entrée'], //?\n    'outputLimit': [-1, 'W', 'Limite en sortie'],\n    'inverseMaxPower': [-1, 'W', \"Limite d'injection réseau\"],\n    'solarInputPower': [-1, 'W', 'Production solaire totale'],\n    'packInputPower': [-1, 'W', 'Pack input power'],\n    'outputPackPower': [-1, 'W', 'Output to pack power'],\n    'outputHomePower': [-1, 'W', 'Output to home power'],\n    'packNum': [-1, '', 'Nombre de batteries'],\n    'packState': [-1, 'enum', 'Etat de fonctionnement'], // 0:standby 1:input 2:output\n    'buzzerSwitch': [false, 'b', 'Buzzer switch'],\n    'masterSwitch': [false, 'b', 'Master switch'],\n    'solarPower1': [-1, 'W', 'Production solaire 1'],\n    'solarPower2': [-1, 'W', 'Production solaire 2'],\n    'passMode': [-1, 'enum', 'Bypass Mode'], // 0：auto 1:always off 2:always on\n    'autoRecover': [-1, 'enum', 'Automatic recovery of bypass mode settings'], // 0:off 1:on\n    //'packData': {}, // @see battery\n\n    'hyperTmp': [-1, '°C', 'Température'], // in x10 Kelvin\n    'acMode': [-1, 'enum', 'AC mode'],\n    'wifiState': [false, 'b', 'WiFi state'],\n    //'heatState': -1,\n    //'hubState': -1,\n\n    'gridInputPower': [-1, 'W', 'Grid input power'],\n    'acOutputPower': [-1, 'W', 'AC output power'],\n    'dcOutputPower': [-1, 'W', 'DC output power'], // model ACE 1500\n    'acSwitch': [false, 'b', 'AC switch'],\n    'dcSwitch': [false, 'b', 'DC switch'], //model ACE 1500\n};\n\n// This is the packData[x] data where x is the current battery pack\nmsg.payload.battery = {\n    'sn': ['', '', 'Numéro de série'],\n    'inverter': ['', '', 'Parent inverter'],\n    'maxVol': [-1, 'mV', 'Voltage maximum'], // 'value * 10', unit: mV, converted on the fly\n    'minVol': [-1, 'mV', 'Voltage minimum'], // 'value * 10', unit: mV, converted on the fly\n    'totalVol': [-1, 'mV', 'Total voltage of the battery'], // 'value * 10', unit: mV, converted on the fly\n    'maxTemp': [-1, '°C', 'Température maximum'], //current highest temperature value among all battery cells, unit: Kelvin => Celsius\n    'socLevel': [-1, '%', 'Niveau de charge'],\n    //'hubState': -1,\n}\n\nmsg.payload.enum = {\n    'packState': {\n        '-1': '',\n        '0': 'Veille',\n        '1': 'Import',\n        '2': 'Export'\n    },\n    'passMode': {\n        '-1': '',\n        '0': 'Auto',\n        '1': 'Always off',\n        '2': 'Always on'\n    },\n    'autoRecover': {\n        '-1': '',\n        '0': 'Off',\n        '1': 'On'\n    },\n    'acMode': {\n        '-1': '',\n        '0': 'Aucun',\n        '1': 'Calendrier',\n        '2': 'Intelligent',\n        '3': 'Tarif'\n    }\n};\n\nmsg.payload.label = {\n    'pow': 'Etat',\n    'mode': 'Mode',\n};\nmsg.payload.unit =  {\n    'pow': '',\n    'mode': '',\n};\nmsg.payload.pow =  {\n    '1': '1',\n    '0': '0'\n};\nmsg.payload.mode = {\n    '0': '0',\n    '1': '1',\n};\nglobal.set('icons', {\n    'pow': {\n        '0': 'power-off',\n        '1': 'power-cycle'\n    },\n    'mode': {\n        '0': 'stop',\n        '1': 'play'\n    }\n}, 'memoryOnly');\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1548,7 +1576,7 @@
             "9dad50003e57f1fc"
         ],
         "x": 145,
-        "y": 620,
+        "y": 680,
         "wires": [
             [
                 "e15a1f4c9b2ebe8f"
@@ -1560,7 +1588,7 @@
         "type": "ui-form",
         "z": "48135a54600713e8",
         "g": "ccd67f9d10cf80ef",
-        "name": "ui - add - form",
+        "name": "add - form",
         "group": "878b175954cece85",
         "label": "",
         "order": 1,
@@ -1596,8 +1624,8 @@
         "className": "",
         "passthru": false,
         "dropdownOptions": [],
-        "x": 460,
-        "y": 620,
+        "x": 450,
+        "y": 680,
         "wires": [
             [
                 "efbab03f220791d4"
@@ -1616,8 +1644,8 @@
             "afb87f35140e1869",
             "0fcb199df8ea7a6b"
         ],
-        "x": 1455,
-        "y": 620,
+        "x": 1435,
+        "y": 680,
         "wires": []
     },
     {
@@ -1634,7 +1662,7 @@
         "finalize": "",
         "libs": [],
         "x": 270,
-        "y": 620,
+        "y": 680,
         "wires": [
             [
                 "ad0e3169b58b79be"
@@ -1654,8 +1682,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 650,
-        "y": 620,
+        "x": 630,
+        "y": 680,
         "wires": [
             [
                 "f1c9618a72c03031",
@@ -1677,8 +1705,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1510,
-        "y": 680,
+        "x": 1490,
+        "y": 740,
         "wires": []
     },
     {
@@ -1698,8 +1726,8 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 830,
-        "y": 620,
+        "x": 810,
+        "y": 680,
         "wires": [
             [
                 "91ae6c95317eaa91"
@@ -1710,12 +1738,13 @@
         "id": "9d2379c6342d348f",
         "type": "json",
         "z": "48135a54600713e8",
+        "g": "ccd67f9d10cf80ef",
         "name": "",
         "property": "payload",
         "action": "",
         "pretty": false,
         "x": 1150,
-        "y": 620,
+        "y": 680,
         "wires": [
             [
                 "f883c7f40dd54b6e"
@@ -1737,7 +1766,7 @@
         "rh": 0,
         "inputs": 1,
         "x": 430,
-        "y": 800,
+        "y": 320,
         "wires": [
             [
                 "34f609c8b3c6e9ab"
@@ -1750,7 +1779,7 @@
         "z": "48135a54600713e8",
         "g": "242271e7e57a5c2e",
         "name": "custom - port",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1759,7 +1788,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 770,
-        "y": 800,
+        "y": 320,
         "wires": []
     },
     {
@@ -1768,7 +1797,7 @@
         "z": "48135a54600713e8",
         "g": "242271e7e57a5c2e",
         "name": "data",
-        "func": "// Parse MQTT message and store it in memory\n\nconst inverter_template = { ...(global.get('describe.inverter', 'memoryOnly') || {}) };\nconst battery_template = { ...(global.get('describe.battery', 'memoryOnly') || {}) };\nconst inverter = { ...(global.get('inverter', 'memoryOnly') || {}) };\nconst battery = { ...(global.get('battery', 'memoryOnly') || {}) };\n\nif (typeof msg.payload.sn !== 'string') {\n\n    return;\n}\n\nconst sn = msg.payload.sn;\nif (typeof inverter[sn] !== 'object') {\n    inverter[sn] = {};\n}\n\ninverter[sn] = { ...inverter_template, ...inverter[sn] };\n\nfor (const key in msg.payload) {\n    if (key == 'packData') {\n        for (let i = 0; i < msg.payload[key].length; i++) {\n            if (typeof msg.payload[key][i]['sn'] !== 'string') {\n                continue;\n            }\n            let battery_sn = msg.payload[key][i]['sn'];\n\n            if (typeof battery[battery_sn] !== 'object') {\n                battery[battery_sn] = {};\n            }\n            battery[battery_sn] = { ...battery_template, ...battery[battery_sn], ...msg.payload[key][i], ...{ 'inverter': sn } };\n        }\n    }\n    else {\n        inverter[sn][key] = msg.payload[key];\n    }\n}\n\nglobal.set('inverter', inverter, 'memoryOnly');\nglobal.set('battery', battery, 'memoryOnly');\n\n// debug\nmsg.payload = {\n    'inverter': inverter,\n    'battery': battery\n};\n\nreturn msg;",
+        "func": "// Parse MQTT message and store it in memory\n\n// Check that payload is well formed\nif (typeof msg.payload.sn !== 'string') {\n\n    return;\n}\n\n// Get inverter data description\nconst inverter_describe = { ...(global.get('describe.inverter', 'memoryOnly') || {}) };\n\n// Get inverter data default values\nlet inverter_template = { };\nfor (const key in inverter_describe) {\n    inverter_template[key] = inverter_describe[key][0];\n}\n\n// Get inverter data\nconst inverter_data = { ...(global.get('inverter', 'memoryOnly') || {}) };\n\n// Get inverter serial number\nconst sn = msg.payload.sn;\nif (typeof inverter_data[sn] !== 'object') {\n    inverter_data[sn] = {};\n}\n\n// Fill inverter data with all know keys\ninverter_data[sn] = { ...inverter_template, ...inverter_data[sn] };\n\n// Get battery data description\nconst battery_describe = { ...(global.get('describe.battery', 'memoryOnly') || {}) };\n\n// Get battery data default values\nlet battery_template = { };\nfor (const key in battery_describe) {\n    battery_template[key] = battery_describe[key][0];\n}\n\n// Get battery data\nconst battery_data = { ...(global.get('battery', 'memoryOnly') || {}) };\n\n// Parse Zendure MQTT message\nfor (const key in msg.payload) {\n\n    // battery data is in sub object\n    if (key == 'packData') {\n\n        // Parse inverter batteries data\n        for (let i = 0; i < msg.payload[key].length; i++) {\n\n            // Check data is well formed\n            if (typeof msg.payload[key][i]['sn'] !== 'string') {\n\n                continue;\n            }\n\n            // Shortcut\n            let battery_sn = msg.payload[key][i]['sn'];\n\n            // Create battery data if new\n            if (typeof battery_data[battery_sn] !== 'object') {\n                battery_data[battery_sn] = {};\n            }\n\n            // Parse battery data\n            for (const b_key in msg.payload[key][i]) {\n\n                // Convert in mV\n                if (['maxVol', 'minVol', 'totalVol'].includes(b_key)) {\n                    msg.payload[key][i][b_key] = msg.payload[key][i][b_key] * 10;\n                }\n\n                // Convert Kelvin in Celsuis\n                if (b_key === 'maxTemp') {\n                    msg.payload[key][i][b_key] = Math.round(msg.payload[key][i][b_key] * 10 - 2731) / 10;\n                }\n            }\n\n            // Fill battery data with all know keys, and complte with received data\n            battery_data[battery_sn] = { ...battery_template, ...battery_data[battery_sn], ...msg.payload[key][i], ...{ 'inverter': sn } };\n        }\n    }\n    else {\n        // Convert 10x Kelvin in °C\n        if (key === 'hyperTmp') {\n            msg.payload[key] = Math.round(msg.payload[key] - 2731) / 10;\n        }\n\n        // Fill inverter data with received data\n        inverter_data[sn][key] = msg.payload[key];\n    }\n}\n\n// Save data in memory file\nglobal.set('inverter', inverter_data, 'memoryOnly');\nglobal.set('battery', battery_data, 'memoryOnly');\n\n// debug\nmsg.payload = {\n    'inverter': inverter_data,\n    'battery': battery_data\n};\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1776,7 +1805,7 @@
         "finalize": "",
         "libs": [],
         "x": 590,
-        "y": 800,
+        "y": 320,
         "wires": [
             [
                 "239ff5808f6dd8de"
@@ -1787,6 +1816,7 @@
         "id": "91ae6c95317eaa91",
         "type": "switch",
         "z": "48135a54600713e8",
+        "g": "ccd67f9d10cf80ef",
         "name": "status",
         "property": "statusCode",
         "propertyType": "msg",
@@ -1804,7 +1834,7 @@
         "repair": false,
         "outputs": 2,
         "x": 990,
-        "y": 620,
+        "y": 680,
         "wires": [
             [
                 "9d2379c6342d348f"
@@ -1818,6 +1848,7 @@
         "id": "f883c7f40dd54b6e",
         "type": "function",
         "z": "48135a54600713e8",
+        "g": "ccd67f9d10cf80ef",
         "name": "data",
         "func": "if (typeof msg.payload !== 'object'\n   || typeof msg.payload.code !== 'number'\n   || msg.payload.number !== 200\n   || typeof msg.payload.data !== 'object'\n   || typeof msg.payload.data.appKey !== 'string'\n   || typeof msg.payload.data.secret !== 'string'\n   || typeof msg.payload.data.mqttUrl !== 'string'\n   || typeof msg.payload.data.port !== 'number'\n) {\n      msg.payload = \"Compte Zendure invalide\";\n}\nelse {\n   global.set('account', msg.payload.data, 'default');\n\n   msg.payload = \"Compte zendure valide\";\n}\n\nreturn msg;",
         "outputs": 1,
@@ -1827,7 +1858,7 @@
         "finalize": "",
         "libs": [],
         "x": 1310,
-        "y": 620,
+        "y": 680,
         "wires": [
             [
                 "c40764e8810c9f39",
@@ -1841,7 +1872,7 @@
         "z": "48135a54600713e8",
         "g": "242271e7e57a5c2e",
         "name": "check",
-        "func": "const account = { ...(global.get('account', 'default') || {}) };\nif (typeof account.appKey !== 'string' || account.appKey === '') {\n    node.status({ 'fill': 'red', 'text': 'settings nok' });\n    \n    return;\n}\n\nmsg.topic = account.appKey + '/+/state';\nmsg.payload = '';\nmsg.broker = {};\nmsg.broker.broker = account.mqttUrl;\nmsg.broker.port = account.port;\nmsg.broker.username = account.appKey;\nmsg.broker.password = account.secret;\n\nmsg.broker.force = true;\nmsg.action = 'connect';\n\nnode.send([msg]);\n\ndelete msg.broker;\n\nawait new Promise(resolve => setTimeout(resolve, 500));\n\nmsg.topic = account.appKey + '/+/state';\nmsg.payload = '';\nmsg.action = 'subscribe';\n\nnode.send([msg]);\n\nnode.status({fill:\"green\",shape:\"ring\",text:\"settings ok\"});\n\nreturn;",
+        "func": "const account = { ...(global.get('account', 'default') || {}) };\nif (typeof account.appKey !== 'string' || account.appKey === '') {\n    node.status({ 'fill': 'red', 'text': 'settings nok' });\n    \n    return;\n}\n\nmsg.topic = account.appKey + '/+/state';\nmsg.payload = '';\nmsg.broker = {};\nmsg.broker.broker = account.mqttUrl;\nmsg.broker.port = account.port;\nmsg.broker.username = account.appKey;\nmsg.broker.password = account.secret;\n\nmsg.broker.force = true;\nmsg.action = 'connect';\n\nnode.send([msg]);\n\ndelete msg.broker;\n\nawait new Promise(resolve => setTimeout(resolve, 1000));\n\nmsg.topic = account.appKey + '/+/state';\nmsg.payload = '';\nmsg.action = 'subscribe';\n\nnode.send([msg]);\n\nnode.status({fill:\"green\",shape:\"ring\",text:\"settings ok\"});\n\nreturn;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1849,7 +1880,7 @@
         "finalize": "",
         "libs": [],
         "x": 270,
-        "y": 800,
+        "y": 320,
         "wires": [
             [
                 "3318e4c3011e5dad"
@@ -1867,7 +1898,7 @@
             "6fee4d827a53c597"
         ],
         "x": 145,
-        "y": 800,
+        "y": 320,
         "wires": [
             [
                 "96ea56ad793ff2be"
@@ -1888,8 +1919,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1180,
-        "y": 680,
+        "x": 1160,
+        "y": 740,
         "wires": []
     },
     {
@@ -1906,8 +1937,569 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 820,
-        "y": 680,
+        "x": 800,
+        "y": 740,
         "wires": []
+    },
+    {
+        "id": "72566a2e8f8e0fcc",
+        "type": "link in",
+        "z": "48135a54600713e8",
+        "g": "de3b449be3696b9f",
+        "name": "custom - detail",
+        "links": [
+            "3b90c3d9bd17f19b",
+            "9dad50003e57f1fc"
+        ],
+        "x": 145,
+        "y": 1160,
+        "wires": [
+            [
+                "9838a27cf370aab3",
+                "f8f807e0a0d4bc70"
+            ]
+        ]
+    },
+    {
+        "id": "9838a27cf370aab3",
+        "type": "function",
+        "z": "48135a54600713e8",
+        "g": "de3b449be3696b9f",
+        "name": "data",
+        "func": "// Prepare UI page data\nflow.set('current_inverter', '', 'memoryOnly');\nflow.set('current_battery', '', 'memoryOnly');\n\n// Get known inverters\nconst inverters = { ...(global.get('inverter', 'memoryOnly') || { }) };\n\n// Prepare message\nmsg.payload = '';\nmsg.class = '';\nmsg.enabled = true;\nmsg.options = [{\n    'label': '',\n    'value': '',\n    'dropdown': 'name'\n}];\n\nlet i = 1;\nfor(const sn in inverters) {\n    msg.options[i++] = {\n        'label': sn,\n        'value': sn,\n        'dropdown': 'name'\n    }\n}\n\n// If there are no inverters\nif (i == 1) {\n\n    node.send([null, null]);\n}\n// If there is only one inverter\nelse if (i == 2) {\n    msg.payload = msg.options[1]['value'];\n    node.send([msg, null]);\n    msg.class = 'remove';\n    msg.enlabed = false;\n\n    node.send([null, msg]);\n}\n// If there are more than one inverter\nelse {\n\n    node.send([null, msg]);\n}\n\nreturn;",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 1040,
+        "wires": [
+            [
+                "64226070ffae0dab"
+            ],
+            [
+                "6adbf4edd2050690"
+            ]
+        ]
+    },
+    {
+        "id": "6adbf4edd2050690",
+        "type": "ui-dropdown",
+        "z": "48135a54600713e8",
+        "g": "de3b449be3696b9f",
+        "group": "117d5289b94a0fc6",
+        "name": "detail - inverter - select",
+        "label": "Sélectionner un onduleur",
+        "tooltip": "",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "passthru": false,
+        "multiple": false,
+        "chips": false,
+        "clearable": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "typeIsComboBox": true,
+        "msgTrigger": "onChange",
+        "x": 480,
+        "y": 1100,
+        "wires": [
+            [
+                "f1716f9a1110221a"
+            ]
+        ]
+    },
+    {
+        "id": "f1716f9a1110221a",
+        "type": "switch",
+        "z": "48135a54600713e8",
+        "g": "de3b449be3696b9f",
+        "name": "empty",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nempty"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 670,
+        "y": 1100,
+        "wires": [
+            [
+                "64226070ffae0dab"
+            ],
+            [
+                "f8f807e0a0d4bc70"
+            ]
+        ]
+    },
+    {
+        "id": "64226070ffae0dab",
+        "type": "switch",
+        "z": "48135a54600713e8",
+        "g": "de3b449be3696b9f",
+        "name": "exists",
+        "property": "#:(memoryOnly)::inverter",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "hask",
+                "v": "payload",
+                "vt": "msg"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 830,
+        "y": 1040,
+        "wires": [
+            [
+                "e05cf5155f9dcfd0",
+                "90816590c50872db"
+            ],
+            [
+                "f8f807e0a0d4bc70"
+            ]
+        ]
+    },
+    {
+        "id": "d47f0440253a4247",
+        "type": "change",
+        "z": "48135a54600713e8",
+        "g": "de3b449be3696b9f",
+        "name": "set",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "#:(memoryOnly)::current_inverter",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 980,
+        "wires": [
+            [
+                "7901240e8f0c9641"
+            ]
+        ]
+    },
+    {
+        "id": "7901240e8f0c9641",
+        "type": "delay",
+        "z": "48135a54600713e8",
+        "g": "de3b449be3696b9f",
+        "name": "1m",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 650,
+        "y": 980,
+        "wires": [
+            [
+                "5fe77efb8a1e0b2c"
+            ]
+        ]
+    },
+    {
+        "id": "5fe77efb8a1e0b2c",
+        "type": "switch",
+        "z": "48135a54600713e8",
+        "g": "de3b449be3696b9f",
+        "name": "check",
+        "property": "#:(memoryOnly)::current_inverter",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "payload",
+                "vt": "msg"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 1,
+        "x": 810,
+        "y": 980,
+        "wires": [
+            [
+                "e05cf5155f9dcfd0"
+            ]
+        ]
+    },
+    {
+        "id": "e05cf5155f9dcfd0",
+        "type": "change",
+        "z": "48135a54600713e8",
+        "g": "de3b449be3696b9f",
+        "name": "global",
+        "rules": [
+            {
+                "t": "set",
+                "p": "#:(memoryOnly)::current_inverter",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "#:(memoryOnly)::current_battery",
+                "pt": "flow",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "#:(memoryOnly)::inverter[msg.payload]",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 990,
+        "y": 980,
+        "wires": [
+            [
+                "d47f0440253a4247",
+                "0a5ecfcf8fa10f73",
+                "4ca0413e3f52e84b",
+                "e20da82ff41a4cb7"
+            ]
+        ]
+    },
+    {
+        "id": "90816590c50872db",
+        "type": "change",
+        "z": "48135a54600713e8",
+        "g": "de3b449be3696b9f",
+        "name": "show",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "class",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "enabled",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1170,
+        "y": 1040,
+        "wires": [
+            [
+                "2369bf87ea59c9ea",
+                "080e692d5f55025c"
+            ]
+        ]
+    },
+    {
+        "id": "f8f807e0a0d4bc70",
+        "type": "change",
+        "z": "48135a54600713e8",
+        "g": "de3b449be3696b9f",
+        "name": "hide",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "class",
+                "pt": "msg",
+                "to": "remove",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "enabled",
+                "pt": "msg",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1170,
+        "y": 1160,
+        "wires": [
+            [
+                "2369bf87ea59c9ea",
+                "080e692d5f55025c"
+            ]
+        ]
+    },
+    {
+        "id": "0a5ecfcf8fa10f73",
+        "type": "function",
+        "z": "48135a54600713e8",
+        "g": "de3b449be3696b9f",
+        "name": "data",
+        "func": "// Parse inverter data\n\nconst describe = { ...(global.get('describe.inverter', 'memoryOnly') || { }) };\nconst enums = { ...(global.get('describe.enum', 'memoryOnly') || { }) };\n\nlet i = 0;\nlet data = [];\n\nfor (const k in describe) {\n    if (k in msg.payload) {\n        let unit = describe[k][1];\n        let value = msg.payload[k];\n\n        if (unit === 'enum' && typeof enums[k] === 'object' && typeof enums[k][value.toString()] === 'string') {\n            value = enums[k][value.toString()];\n            unit = '';\n        }\n        else if (unit === 'b') {\n            value = value === 1 ? 'On' : 'Off';\n            unit = '';\n        }\n\n        data[i++] = {\n            'name': describe[k][2],\n            'value': value,\n            'unit': unit\n        };\n    }\n}\n\nmsg.payload = data;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 980,
+        "wires": [
+            [
+                "2369bf87ea59c9ea"
+            ]
+        ]
+    },
+    {
+        "id": "2369bf87ea59c9ea",
+        "type": "ui-table",
+        "z": "48135a54600713e8",
+        "d": true,
+        "g": "de3b449be3696b9f",
+        "group": "117d5289b94a0fc6",
+        "name": "detail - inverter - table",
+        "label": "",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "maxrows": 0,
+        "passthru": false,
+        "autocols": false,
+        "showSearch": false,
+        "deselect": true,
+        "selectionType": "click",
+        "columns": [
+            {
+                "title": "",
+                "key": "name",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "end"
+            },
+            {
+                "title": "",
+                "key": "value",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "end"
+            },
+            {
+                "title": "",
+                "key": "unit",
+                "keyType": "key",
+                "type": "text",
+                "width": "20px",
+                "align": "start"
+            }
+        ],
+        "mobileBreakpoint": "sm",
+        "mobileBreakpointType": "defaults",
+        "action": "replace",
+        "className": "",
+        "x": 1380,
+        "y": 980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4ca0413e3f52e84b",
+        "type": "function",
+        "z": "48135a54600713e8",
+        "g": "de3b449be3696b9f",
+        "name": "main",
+        "func": "// Table bout main device information\n\nconst describe = { ...(global.get('describe.inverter', 'memoryOnly') || {}) };\nconst enums = { ...(global.get('describe.enum', 'memoryOnly') || {}) };\n\nlet res = [];\nlet i = 0;\nlet exists = false;\nlet state = 0;\n\nif (typeof msg.payload['sn'] == 'string') {\n    res[i++] = {\n        'lbl': describe['sn'][2],\n        'val': msg.payload['sn']\n    };\n    exists = true;\n}\n\nif (typeof msg.payload['packNum'] == 'number') {\n    res[i++] = {\n        'lbl': describe['packNum'][2],\n        'val': msg.payload['packNum']\n    };\n    exists = true;\n}\n\nif (typeof msg.payload['packState'] == 'number') {\n    res[i++] = {\n        'lbl': describe['packState'][2],\n        'val': enums['packState'][msg.payload['packState']]\n    };\n    exists = true;\n    state = msg.payload['packState'];\n}\n\nif (typeof msg.payload['electricLevel'] === 'number') {\n    res[i++] = {\n        'lbl': describe['electricLevel'][2],\n        'val': msg.payload['electricLevel'] + ' ' + describe['electricLevel'][1]\n    };\n    exists = true;\n}\n\nif (state === 1 && typeof msg.payload['remainInputTime'] == 'number') {\n    res[i++] = {\n        'lbl': describe['remainInputTime'][2],\n        'val': msg.payload['remainInputTime'] + ' ' + describe['remainInputTime'][1]\n    };\n    exists = true;\n}\n\nif (state === 2 && typeof msg.payload['remainOutTime'] == 'number') {\n    res[i++] = {\n        'lbl': describe['remainOutTime'][2],\n        'val': msg.payload['remainOutTime'] + ' ' + describe['remainOutTime'][1]\n    };\n    exists = true;\n}\n\nif (exists === true) {\n    msg.payload = res;\n    msg.class = '';\n\n    return msg;\n}\n\nreturn;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 860,
+        "wires": [
+            [
+                "080e692d5f55025c"
+            ]
+        ]
+    },
+    {
+        "id": "080e692d5f55025c",
+        "type": "ui-table",
+        "z": "48135a54600713e8",
+        "g": "de3b449be3696b9f",
+        "group": "117d5289b94a0fc6",
+        "name": "detail - inverter - main",
+        "label": "Appareil",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "maxrows": 0,
+        "passthru": false,
+        "autocols": false,
+        "showSearch": false,
+        "deselect": true,
+        "selectionType": "none",
+        "columns": [
+            {
+                "title": "",
+                "key": "lbl",
+                "keyType": "key",
+                "type": "text",
+                "width": "40%",
+                "align": "end"
+            },
+            {
+                "title": "",
+                "key": "val",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "start"
+            }
+        ],
+        "mobileBreakpoint": "sm",
+        "mobileBreakpointType": "defaults",
+        "action": "replace",
+        "className": "",
+        "x": 1380,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e20da82ff41a4cb7",
+        "type": "function",
+        "z": "48135a54600713e8",
+        "g": "de3b449be3696b9f",
+        "name": "settings",
+        "func": "// Table about main device settings\n\nconst describe = { ...(global.get('describe.inverter', 'memoryOnly') || {}) };\nconst enums = { ...(global.get('describe.enum', 'memoryOnly') || {}) };\n\nlet res = [];\nlet i = 0;\nlet exists = false;\n\nif (typeof msg.payload['socSet'] == 'number') {\n    res[i++] = {\n        'lbl': describe['socSet'][2],\n        'val': msg.payload['socSet'] + ' ' + describe['socSet'][1]\n    };\n    exists = true;\n}\n\nif (typeof msg.payload['inputLimit'] == 'number') {\n    res[i++] = {\n        'lbl': describe['inputLimit'][2],\n        'val': msg.payload['inputLimit'] + ' ' + describe['inputLimit'][1]\n    };\n    exists = true;\n}\n\nif (typeof msg.payload['outputLimit'] == 'number') {\n    res[i++] = {\n        'lbl': describe['outputLimit'][2],\n        'val': msg.payload['outputLimit'] + ' ' + describe['outputLimit'][1]\n    };\n    exists = true;\n}\n\nif (typeof msg.payload['inverseMaxPower'] == 'number') {\n    res[i++] = {\n        'lbl': describe['inverseMaxPower'][2],\n        'val': msg.payload['inverseMaxPower'] + ' ' + describe['inverseMaxPower'][1]\n    };\n    exists = true;\n}\n\n\nif (exists === true) {\n    msg.payload = res;\n    msg.class = '';\n\n    return msg;\n}\n\nreturn;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1160,
+        "y": 920,
+        "wires": [
+            [
+                "f7066787d032e148"
+            ]
+        ]
+    },
+    {
+        "id": "f7066787d032e148",
+        "type": "ui-table",
+        "z": "48135a54600713e8",
+        "g": "de3b449be3696b9f",
+        "group": "117d5289b94a0fc6",
+        "name": "detail - inverter - settings",
+        "label": "Paramètres",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "maxrows": 0,
+        "passthru": false,
+        "autocols": false,
+        "showSearch": false,
+        "deselect": true,
+        "selectionType": "none",
+        "columns": [
+            {
+                "title": "",
+                "key": "lbl",
+                "keyType": "key",
+                "type": "text",
+                "width": "40%",
+                "align": "end"
+            },
+            {
+                "title": "",
+                "key": "val",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "start"
+            }
+        ],
+        "mobileBreakpoint": "sm",
+        "mobileBreakpointType": "defaults",
+        "action": "replace",
+        "className": "",
+        "x": 1390,
+        "y": 920,
+        "wires": [
+            []
+        ]
     }
 ]
