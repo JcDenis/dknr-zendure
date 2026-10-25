@@ -353,8 +353,27 @@
         ],
         "x": 104,
         "y": 1359,
-        "w": 702,
+        "w": 542,
         "h": 142
+    },
+    {
+        "id": "e28c6dafcd3de09d",
+        "type": "group",
+        "z": "48135a54600713e8",
+        "name": "reset",
+        "style": {
+            "fill": "#ff0000",
+            "fill-opacity": "0.05",
+            "label": true
+        },
+        "nodes": [
+            "025916ad75d760ec",
+            "ba456fafe595af98"
+        ],
+        "x": 614,
+        "y": 159,
+        "w": 332,
+        "h": 82
     },
     {
         "id": "df7710b4b2c4e55b",
@@ -1579,7 +1598,7 @@
         "z": "48135a54600713e8",
         "g": "8f8487859d9ae01f",
         "name": "custom - describe",
-        "func": "msg.payload.project = 'dknr-zendure';\n\nmsg.payload.hmi = {\n    'detail': 'Piloter',\n    'add': 'Ajouter',\n    'mqtt': 'Configurer'\n};\n\n// courec entry: [name, entry, group, type, unit, default value, options: {key, name}, ha type, ha device_class, ha state_class]\n\nmsg.payload.inverter = {\n    // For now, we only take Hyper 2000 data.\n    'sn': ['Numéro de série', 'id', 'sensor', 'text', '', { }, 'text', '', ''],\n    'electricLevel': ['Niveau de charge', 'batteryLevel', 'sensor', 'number', '%', 0, {}, 'sensor', 'measurement', 'battery'],\n    'remainOutTime': ['Temps de décharge restant', 'lowLevelTime', 'sensor', 'number', 's', 0, {}, 'sensor', 'measurement', 'duration'],\n    'remainInputTime': ['Temps de recharge restant', 'highLevelTime', 'sensor', 'number', 's', 0, {}, 'sensor', 'measurement', 'duration'],\n    'socSet': ['Limite de puissance de charge', 'maxInputPower', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'inputLimit': ['Limite en entrée', 'maxInputPower2', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'], //?\n    'outputLimit': ['Limite en sortie', 'maxOutputPower2', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'inverseMaxPower': [\"Limite d'injection réseau\", 'maxOutputPower', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'solarInputPower': ['Production solaire totale', 'solarPowerTotal', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'packInputPower': ['Puissance en entrée', 'deviceInputPower', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'outputPackPower': ['Puissance en sortie', 'deviceOutputPower', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'outputHomePower': ['Puissance vers la grille', 'homeOuputPower', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'packNum': ['Nombre de batteries', 'batteryNumber', 'sensor', 'number', '', 0, {}, '', '', ''],\n    'packState': ['Etat de fonctionnement', 'deviceState', 'sensor', 'enum', '', '0', { '0': 'standby', '1': 'input', '2': 'output' }, 'binary_sensor', 'measurement', 'enum'], // 0:standby 1:input 2:output\n    'buzzerSwitch': ['Buzzer switch', 'buzzerSwitch', 'sensor', 'binary', '', 0, {}, 'binary_sensor', 'measurement', 'none'],\n    'masterSwitch': ['Master switch', 'masterSwitch', 'sensor', 'binary', '', 0, {}, 'binary_sensor', 'measurement', 'none'],\n    'solarPower1': ['Production solaire 1', 'solarPower1', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'solarPower2': ['Production solaire 2', 'solarPower2', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'passMode': ['Bypass Mode', 'bypassmode', 'sensor', 'enum', '', '0', { '0': 'auto', '1': 'always off', '2': 'always on' }, 'sensor', 'measurement', 'none'], // 0：auto 1:always off 2:always on\n    'autoRecover': ['Automatic recovery of bypass mode settings', 'bypassRecovery', 'sensor', 'enum', '', '0', { '0': 'off', '1': 'on' }, 'binary_sensor', 'measurement', 'none'], // 0:off 1:on\n    //'packData': {}, // @see battery\n\n    'hyperTmp': ['Température', 'deviceTemperature', 'sensor', 'number', '°C', 0, {}, 'sensor', 'measurement', 'temperature'], // in x10 Kelvin\n    //'acMode': [-1, 'enum', 'AC mode', 'acMode'],\n    'wifiState': ['WiFi state', 'wifiState', 'sensor', 'enum', '', '0', { '0': 'disconnect', '1': 'connected' }, 'binary_sensor', 'measurement', 'connectivity'],\n    //'heatState': -1,\n    //'hubState': -1,\n\n    'gridInputPower': ['Grid input power', 'gridInputPower', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'acOutputPower': ['AC output power', 'acOutputPower', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'dcOutputPower': ['DC output power', 'dcOutputPower', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'], // model ACE 1500\n    'acSwitch': ['AC switch', 'acSwitch', 'sensor', 'enum', '', '0', { '0': 'off', '1': 'on' }, 'binary_sensor', 'measurement', 'none'],\n    'dcSwitch': ['DC switch', 'dcSwitch', 'sensor', 'enum', '', '0', { '0': 'off', '1': 'on' }, 'binary_sensor', 'measurement', 'none'], //model ACE 1500\n};\n\n// This is the packData[x] data where x is the current battery pack\nmsg.payload.battery = {\n    'sn': ['Numéro de série', 'id', 'sensor', 'text', '', {}, 'text', '', ''],\n    'inverter': ['Parent inverter', 'inverter', 'sensor', 'text', '', {}, 'text', '', ''],\n    'maxVol': ['Voltage maximum', 'maxVoltage', 'sensor', 'number', 'mV', 0, {}, 'sensor', 'measurement', 'voltage'], // 'value * 10', unit: mV, converted on the fly\n    'minVol': ['Voltage minimum', 'minVoltage', 'sensor', 'number', 'mV', 0, {}, 'sensor', 'measurement', 'voltage'], // 'value * 10', unit: mV, converted on the fly\n    'totalVol': ['Total voltage of the battery', 'totalVoltage', 'sensor', 'number', 'mV', 0, {}, 'sensor', 'measurement', 'voltage'], // 'value * 10', unit: mV, converted on the fly\n    'maxTemp': ['Température maximum', 'maxTemperature', 'sensor', 'number', '°C', 0, {}, 'sensor', 'measurement', 'temperature'], //current highest temperature value among all battery cells, unit: Kelvin => Celsius\n    'socLevel': ['Niveau de charge', 'batteryLevel', 'sensor', 'number', '%', 0, {}, 'sensor', 'measurement', 'battery'],\n    //'hubState': -1,\n}\n\nmsg.payload.zendure3ct = {\n    'L1_freq': ['Fréquence 1', 'L1_frequency', 'sensor', 'number', 'Hz', 0, {}, 'sensor', 'measurement', 'frequency'],\n    'L1_u': ['Voltage 1', 'L1_voltage', 'sensor', 'number', 'V', 0, {}, 'sensor', 'measurement', 'voltage'],\n    'L1_i': ['Intensité 1', 'L1_current', 'sensor', 'number', 'A', 0, {}, 'sensor', 'measurement', 'current'],\n    'L1_p': ['Puissance 1', 'L1_power', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n\n    'L2_freq': ['Fréquence 2', 'L2_frequency', 'sensor', 'number', 'Hz', 0, {}, 'sensor', 'measurement', 'frequency'],\n    'L2_u': ['Voltage 2', 'L2_voltage', 'sensor', 'number', 'V', 0, {}, 'sensor', 'measurement', 'voltage'],\n    'L2_i': ['Intensité 2', 'L2_current', 'sensor', 'number', 'A', 0, {}, 'sensor', 'measurement', 'current'],\n    'L2_p': ['Puissance 2', 'L2_power', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n\n    'L3_freq': ['Fréquence 3', 'L3_frequency', 'sensor', 'number', 'Hz', 0, {}, 'sensor', 'measurement', 'frequency'],\n    'L3_u': ['Voltage 3', 'L3_voltage', 'sensor', 'number', 'V', 0, {}, 'sensor', 'measurement', 'voltage'],\n    'L3_i': ['Intensité 3', 'L3_current', 'sensor', 'number', 'A', 0, {}, 'sensor', 'measurement', 'current'],\n    'L3_p': ['Puissance 3', 'L3_power', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power']\n}\n\nmsg.payload.enum = {\n    'packState': {\n        '-1': '',\n        '0': 'En veille',\n        '1': 'En charge',\n        '2': 'En décharge'\n    },\n    'passMode': {\n        '-1': '',\n        '0': 'Auto',\n        '1': 'Always off',\n        '2': 'Always on'\n    },\n    'autoRecover': {\n        '-1': '',\n        '0': 'Off',\n        '1': 'On'\n    },\n    'acMode': {\n        '-1': '',\n        '0': 'Aucun',\n        '1': 'Calendrier',\n        '2': 'Intelligent',\n        '3': 'Tarif'\n    }\n};\n\nmsg.payload.label = {\n    'pow': 'Etat',\n    'mode': 'Mode',\n};\nmsg.payload.unit =  {\n    'pow': '',\n    'mode': '',\n};\nmsg.payload.pow =  {\n    '1': '1',\n    '0': '0'\n};\nmsg.payload.mode = {\n    '0': '0',\n    '1': '1',\n};\nglobal.set('icons', {\n    'pow': {\n        '0': 'power-off',\n        '1': 'power-cycle'\n    },\n    'mode': {\n        '0': 'stop',\n        '1': 'play'\n    }\n}, 'memoryOnly');\n\nreturn msg;",
+        "func": "msg.payload.project = 'dknr-zendure';\n\nmsg.payload.hmi = {\n    'detail': 'Piloter',\n    'add': 'Ajouter',\n    'mqtt': 'Configurer'\n};\n\n// courec entry: [name, entry, group, type, unit, default value, options: {key, name}, ha type, ha device_class, ha state_class]\n\nmsg.payload.inverter = {\n    // For now, we only take Hyper 2000 data.\n    'sn': ['Numéro de série', 'id', 'sensor', 'text', '', { }, 'text', '', ''],\n    'electricLevel': ['Niveau de charge', 'batteryLevel', 'sensor', 'number', '%', 0, {}, 'sensor', 'measurement', 'battery'],\n    'remainOutTime': ['Temps de décharge restant', 'lowLevelTime', 'sensor', 'number', 's', 0, {}, 'sensor', 'measurement', 'duration'],\n    'remainInputTime': ['Temps de recharge restant', 'highLevelTime', 'sensor', 'number', 's', 0, {}, 'sensor', 'measurement', 'duration'],\n    'socSet': ['Limite de puissance de charge', 'maxInputPower', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'inputLimit': ['Limite en entrée', 'maxInputPower2', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'], //?\n    'outputLimit': ['Limite en sortie', 'maxOutputPower2', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'inverseMaxPower': [\"Limite d'injection réseau\", 'maxOutputPower', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'solarInputPower': ['Production solaire totale', 'solarPowerTotal', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'packInputPower': ['Puissance en entrée', 'deviceInputPower', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'outputPackPower': ['Puissance en sortie', 'deviceOutputPower', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'outputHomePower': ['Puissance vers la grille', 'homeOuputPower', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'packNum': ['Nombre de batteries', 'batteryNumber', 'sensor', 'number', '', 0, {}, '', '', ''],\n    'packState': ['Etat de fonctionnement', 'deviceState', 'sensor', 'enum', '', '0', { '0': 'standby', '1': 'input', '2': 'output' }, 'binary_sensor', 'measurement', 'enum'], // 0:standby 1:input 2:output\n    'buzzerSwitch': ['Buzzer switch', 'buzzerSwitch', 'sensor', 'binary', '', 0, {}, 'binary_sensor', 'measurement', 'none'],\n    'masterSwitch': ['Master switch', 'masterSwitch', 'sensor', 'binary', '', 0, {}, 'binary_sensor', 'measurement', 'none'],\n    'solarPower1': ['Production solaire 1', 'solarPower1', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'solarPower2': ['Production solaire 2', 'solarPower2', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'passMode': ['Bypass Mode', 'bypassmode', 'sensor', 'enum', '', '0', { '0': 'auto', '1': 'always off', '2': 'always on' }, 'sensor', 'measurement', 'none'], // 0：auto 1:always off 2:always on\n    'autoRecover': ['Automatic recovery of bypass mode settings', 'bypassRecovery', 'sensor', 'enum', '', '0', { '0': 'off', '1': 'on' }, 'binary_sensor', 'measurement', 'none'], // 0:off 1:on\n    //'packData': {}, // @see battery\n\n    'hyperTmp': ['Température', 'deviceTemperature', 'sensor', 'number', '°C', 0, {}, 'sensor', 'measurement', 'temperature'], // in x10 Kelvin\n    //'acMode': [-1, 'enum', 'AC mode', 'acMode'],\n    'wifiState': ['WiFi state', 'wifiState', 'sensor', 'enum', '', '0', { '0': 'disconnect', '1': 'connected' }, 'binary_sensor', 'measurement', 'connectivity'],\n    //'heatState': -1,\n    //'hubState': -1,\n\n    'gridInputPower': ['Grid input power', 'gridInputPower', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'acOutputPower': ['AC output power', 'acOutputPower', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n    'dcOutputPower': ['DC output power', 'dcOutputPower', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'], // model ACE 1500\n    'acSwitch': ['AC switch', 'acSwitch', 'sensor', 'enum', '', '0', { '0': 'off', '1': 'on' }, 'binary_sensor', 'measurement', 'none'],\n    'dcSwitch': ['DC switch', 'dcSwitch', 'sensor', 'enum', '', '0', { '0': 'off', '1': 'on' }, 'binary_sensor', 'measurement', 'none'], //model ACE 1500\n};\n\n// This is the packData[x] data where x is the current battery pack\nmsg.payload.battery = {\n    'sn': ['Numéro de série', 'id', 'sensor', 'text', '', {}, 'text', '', ''],\n    'inverter': ['Parent inverter', 'inverter', 'sensor', 'text', '', {}, 'text', '', ''],\n    'maxVol': ['Voltage maximum', 'maxVoltage', 'sensor', 'number', 'mV', 0, {}, 'sensor', 'measurement', 'voltage'], // 'value * 10', unit: mV, converted on the fly\n    'minVol': ['Voltage minimum', 'minVoltage', 'sensor', 'number', 'mV', 0, {}, 'sensor', 'measurement', 'voltage'], // 'value * 10', unit: mV, converted on the fly\n    'totalVol': ['Total voltage of the battery', 'totalVoltage', 'sensor', 'number', 'mV', 0, {}, 'sensor', 'measurement', 'voltage'], // 'value * 10', unit: mV, converted on the fly\n    'maxTemp': ['Température maximum', 'maxTemperature', 'sensor', 'number', '°C', 0, {}, 'sensor', 'measurement', 'temperature'], //current highest temperature value among all battery cells, unit: Kelvin => Celsius\n    'socLevel': ['Niveau de charge', 'batteryLevel', 'sensor', 'number', '%', 0, {}, 'sensor', 'measurement', 'battery'],\n    //'hubState': -1,\n}\n\nmsg.payload.zendure3ct = {\n    'L1_freq': ['Fréquence 1', 'L1Frequency', 'sensor', 'number', 'Hz', 0, {}, 'sensor', 'measurement', 'frequency'],\n    'L1_u': ['Voltage 1', 'L1Voltage', 'sensor', 'number', 'V', 0, {}, 'sensor', 'measurement', 'voltage'],\n    'L1_i': ['Intensité 1', 'L1Current', 'sensor', 'number', 'A', 0, {}, 'sensor', 'measurement', 'current'],\n    'L1_p': ['Puissance 1', 'L1Power', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n\n    'L2_freq': ['Fréquence 2', 'L2Frequency', 'sensor', 'number', 'Hz', 0, {}, 'sensor', 'measurement', 'frequency'],\n    'L2_u': ['Voltage 2', 'L2Voltage', 'sensor', 'number', 'V', 0, {}, 'sensor', 'measurement', 'voltage'],\n    'L2_i': ['Intensité 2', 'L2Current', 'sensor', 'number', 'A', 0, {}, 'sensor', 'measurement', 'current'],\n    'L2_p': ['Puissance 2', 'L2Power', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power'],\n\n    'L3_freq': ['Fréquence 3', 'L3Frequency', 'sensor', 'number', 'Hz', 0, {}, 'sensor', 'measurement', 'frequency'],\n    'L3_u': ['Voltage 3', 'L3Voltage', 'sensor', 'number', 'V', 0, {}, 'sensor', 'measurement', 'voltage'],\n    'L3_i': ['Intensité 3', 'L3Current', 'sensor', 'number', 'A', 0, {}, 'sensor', 'measurement', 'current'],\n    'L3_p': ['Puissance 3', 'L3Power', 'sensor', 'number', 'W', 0, {}, 'sensor', 'measurement', 'power']\n}\n\nmsg.payload.enum = {\n    'packState': {\n        '-1': '',\n        '0': 'En veille',\n        '1': 'En charge',\n        '2': 'En décharge'\n    },\n    'passMode': {\n        '-1': '',\n        '0': 'Auto',\n        '1': 'Always off',\n        '2': 'Always on'\n    },\n    'autoRecover': {\n        '-1': '',\n        '0': 'Off',\n        '1': 'On'\n    },\n    'acMode': {\n        '-1': '',\n        '0': 'Aucun',\n        '1': 'Calendrier',\n        '2': 'Intelligent',\n        '3': 'Tarif'\n    }\n};\n\nmsg.payload.label = {\n    'pow': 'Etat',\n    'mode': 'Mode',\n};\nmsg.payload.unit =  {\n    'pow': '',\n    'mode': '',\n};\nmsg.payload.pow =  {\n    '1': '1',\n    '0': '0'\n};\nmsg.payload.mode = {\n    '0': '0',\n    '1': '1',\n};\nglobal.set('icons', {\n    'pow': {\n        '0': 'power-off',\n        '1': 'power-cycle'\n    },\n    'mode': {\n        '0': 'stop',\n        '1': 'play'\n    }\n}, 'memoryOnly');\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1876,7 +1895,7 @@
         "z": "48135a54600713e8",
         "g": "242271e7e57a5c2e",
         "name": "custom - port",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -3000,7 +3019,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 670,
+        "x": 510,
         "y": 1460,
         "wires": []
     },
@@ -3009,7 +3028,7 @@
         "type": "inject",
         "z": "48135a54600713e8",
         "g": "c2a4c908aa1cf2e9",
-        "name": "custom - discovery",
+        "name": "discovery",
         "props": [
             {
                 "p": "payload"
@@ -3020,13 +3039,13 @@
             }
         ],
         "repeat": "",
-        "crontab": "",
+        "crontab": "00 03 * * *",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "str",
-        "x": 250,
+        "x": 290,
         "y": 1460,
         "wires": [
             [
@@ -3044,7 +3063,7 @@
         "links": [
             "6bfb1868b6a98f04"
         ],
-        "x": 745,
+        "x": 585,
         "y": 1400,
         "wires": []
     },
@@ -3066,7 +3085,7 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 630,
+        "x": 470,
         "y": 1400,
         "wires": [
             [
@@ -3087,7 +3106,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 460,
+        "x": 300,
         "y": 1400,
         "wires": [
             [
@@ -3100,6 +3119,7 @@
         "id": "025916ad75d760ec",
         "type": "inject",
         "z": "48135a54600713e8",
+        "g": "e28c6dafcd3de09d",
         "name": "reset",
         "props": [
             {
@@ -3129,6 +3149,7 @@
         "id": "ba456fafe595af98",
         "type": "function",
         "z": "48135a54600713e8",
+        "g": "e28c6dafcd3de09d",
         "name": "data",
         "func": "flow.set('last', { }, 'memoryOnly');\n\nreturn;",
         "outputs": 0,
