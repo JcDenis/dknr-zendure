@@ -1876,7 +1876,7 @@
         "z": "48135a54600713e8",
         "g": "242271e7e57a5c2e",
         "name": "custom - port",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -2756,7 +2756,7 @@
         "z": "48135a54600713e8",
         "g": "242271e7e57a5c2e",
         "name": "data",
-        "func": "// Compute data for mqtt\n\n// DKNR MQTT topic\nconst enabled = global.get('mqtt.enabled', 'default') || false;\nconst topic = global.get('mqtt.topic', 'default') || '';\nif (!enabled || topic === '') {\n\n    return;\n}\n\nconst source = 'zendure';\nconst inverter_template = { ...(global.get('describe.inverter', 'memoryOnly') || { }) };\nconst inverter_data = msg.payload.inverter;\n\nconst battery_template = { ...(global.get('describe.battery', 'memoryOnly') || {}) };\nconst battery_data = msg.payload.battery;\n\nfor (const sn in inverter_data) {\n    node.status({\"text\":sn});\n    msg.topic = global.get('mqtt.old_topic', 'default') + '/inverter/' + sn;\n    msg.payload = {};\n\n    for (const key in inverter_template) {\n        if (inverter_template[key][3] !== '' \n            && inverter_data[sn].hasOwnProperty(key)\n            && inverter_data[sn][key] !== -1 \n            && inverter_data[sn][key] !== ''\n        ) {\n            msg.payload[inverter_template[key][1]] = {\n                'unit': inverter_template[key][4],\n                'label': inverter_template[key][0],\n                'raw': inverter_data[sn][key].toString(),\n                'value': inverter_data[sn][key],\n                'full': inverter_data[sn][key].toString() + inverter_template[key][4]\n            };\n        }\n        // new version\n        if (flow.get('last[\"' + sn + '_' + inverter_template[key][1] + '\"]', 'memoryOnly') !== inverter_data[sn][key]) {\n            flow.set('last[\"' + sn + '_' + inverter_template[key][1] + '\"]', inverter_data[sn][key], 'memoryOnly');\n            let newMsg = {\n                'topic': [topic, 'get', source, sn, inverter_template[key][1]].join('/'),\n                'payload': inverter_data[sn][key]\n            };\n            node.send([newMsg]);\n        }\n    }\n\n    node.send([msg]);\n}\n\nfor (const sn in battery_data) {\n    msg.topic = global.get('mqtt.old_topic', 'default') + '/battery/' + sn;\n    msg.payload = {};\n\n    for (const key in battery_template) {\n        if (battery_template[key][3] !== '' \n            && battery_data[sn].hasOwnProperty(key)\n            && battery_data[sn][key] !== -1 \n            && battery_data[sn][key] !== ''\n        ) {\n            msg.payload[battery_template[key][1]] = {\n                'unit': battery_template[key][4],\n                'label': battery_template[key][0],\n                'raw': battery_data[sn][key].toString(),\n                'value': battery_data[sn][key],\n                'full': battery_data[sn][key].toString() + battery_template[key][4]\n            };\n        }\n        // new version\n        if (flow.get('last[\"' + sn + '_' + battery_template[key][1] + '\"]', 'memoryOnly') !== battery_data[sn][key]) {\n            flow.set('last[\"' + sn + '_' + battery_template[key][1] + '\"]', battery_data[sn][key], 'memoryOnly');\n            let newMsg = {\n                'topic': [topic, 'get' , source, sn, battery_template[key][1]].join('/'),\n                'payload': battery_data[sn][key]\n            };\n\n            node.send([newMsg]);\n        }\n    }\n\n    node.send([msg]);\n\n}\n\nreturn;",
+        "func": "// Compute data for mqtt\n\n// DKNR MQTT topic\nconst enabled = global.get('mqtt.enabled', 'default') || false;\nconst topic = global.get('mqtt.topic', 'default') || '';\nif (!enabled || topic === '') {\n\n    return;\n}\n\nconst source = 'zendure';\nconst inverter_template = { ...(global.get('describe.inverter', 'memoryOnly') || { }) };\nconst inverter_data = msg.payload.inverter;\n\nconst battery_template = { ...(global.get('describe.battery', 'memoryOnly') || {}) };\nconst battery_data = msg.payload.battery;\n\nfor (const sn in inverter_data) {\n    node.status({\"text\":sn});\n    msg.topic = global.get('mqtt.old_topic', 'default') + '/inverter/' + sn;\n    msg.payload = {};\n\n    for (const key in inverter_template) {\n        if (inverter_template[key][3] !== '' \n            && inverter_data[sn].hasOwnProperty(key)\n            && inverter_data[sn][key] !== -1 \n            && inverter_data[sn][key] !== ''\n        ) {\n            msg.payload[inverter_template[key][1]] = {\n                'unit': inverter_template[key][4],\n                'label': inverter_template[key][0],\n                'raw': inverter_data[sn][key].toString(),\n                'value': inverter_data[sn][key],\n                'full': inverter_data[sn][key].toString() + inverter_template[key][4]\n            };\n        }\n        // new version\n        if (flow.get('last[\"' + sn + '_' + inverter_template[key][1] + '\"]', 'memoryOnly') !== inverter_data[sn][key]) {\n            flow.set('last[\"' + sn + '_' + inverter_template[key][1] + '\"]', inverter_data[sn][key], 'memoryOnly');\n            let newMsg = {\n                'topic': [topic, 'get', source, sn, inverter_template[key][1]].join('/'),\n                'payload': inverter_data[sn][key]\n            };\n            node.send([newMsg]);\n        }\n    }\n\n    node.send([msg]);\n}\n\nfor (const sn in battery_data) {\n    msg.topic = global.get('mqtt.old_topic', 'default') + '/battery/' + sn;\n    msg.payload = {};\n\n    for (const key in battery_template) {\n        if (battery_template[key][3] !== '' \n            && battery_data[sn].hasOwnProperty(key)\n            && battery_data[sn][key] !== -1 \n            && battery_data[sn][key] !== ''\n        ) {\n            msg.payload[battery_template[key][1]] = {\n                'unit': battery_template[key][4],\n                'label': battery_template[key][0],\n                'raw': battery_data[sn][key].toString(),\n                'value': battery_data[sn][key],\n                'full': battery_data[sn][key].toString() + battery_template[key][4]\n            };\n        }\n        // new version\n        if (flow.get('last[\"' + sn + '_' + battery_template[key][1] + '\"]', 'memoryOnly') !== battery_data[sn][key]) {\n            flow.set('last[\"' + sn + '_' + battery_template[key][1] + '\"]', battery_data[sn][key], 'memoryOnly');\n            let newMsg = {\n                'topic': [topic, 'get', source, sn, battery_template[key][1]].join('/'),\n                'payload': battery_data[sn][key]\n            };\n\n            node.send([newMsg]);\n        }\n    }\n\n    node.send([msg]);\n\n}\n\nreturn;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -3095,5 +3095,50 @@
                 "e10ce118e77873bd"
             ]
         ]
+    },
+    {
+        "id": "025916ad75d760ec",
+        "type": "inject",
+        "z": "48135a54600713e8",
+        "name": "reset",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 03 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 710,
+        "y": 200,
+        "wires": [
+            [
+                "ba456fafe595af98"
+            ]
+        ]
+    },
+    {
+        "id": "ba456fafe595af98",
+        "type": "function",
+        "z": "48135a54600713e8",
+        "name": "data",
+        "func": "flow.set('last', { }, 'memoryOnly');\n\nreturn;",
+        "outputs": 0,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 200,
+        "wires": []
     }
 ]
