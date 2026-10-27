@@ -1166,7 +1166,7 @@
         "z": "4c2feff02c9aebaa",
         "g": "06491d8d5f7b9f7c",
         "name": "app",
-        "func": "delete msg.filename;\n\nif (typeof global.get('describe', 'memoryOnly') !== 'object') {\n    global.set('describe', { }, 'memoryOnly')\n}\n\nlet describe = global.get('describe', 'memoryOnly');\n\nif (typeof msg.payload === 'object') {\n    describe.app = {\n        'title': msg.payload.description || '',\n        'version' : msg.payload.version || '',\n        'git': msg.payload.name || ''\n    };\n}\n\ndescribe.mqtt = {\n    'host': '',\n    'port': 1883,\n    'username': '',\n    'password': '',\n    'topic': 'dknr',\n    'enabled': false,\n    'zendure3ct': false,\n    'homeassistant': 'homeassistant',\n    'old_topic': ''\n};\n\nreturn msg;",
+        "func": "delete msg.filename;\n\nif (typeof global.get('describe', 'memoryOnly') !== 'object') {\n    global.set('describe', { }, 'memoryOnly')\n}\n\nlet describe = global.get('describe', 'memoryOnly');\n\nif (typeof msg.payload === 'object') {\n    describe.app = {\n        'title': msg.payload.description.slice(5) || '',\n        'version' : msg.payload.version || '',\n        'git': msg.payload.name || ''\n    };\n}\n\ndescribe.mqtt = {\n    'host': '',\n    'port': 1883,\n    'username': '',\n    'password': '',\n    'topic': 'dknr',\n    'enabled': false,\n    'zendure3ct': false,\n    'homeassistant': 'homeassistant',\n    'old_topic': ''\n};\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
