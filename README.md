@@ -17,6 +17,7 @@
 - **Support du compteur Zendure 3CT** via un broker MQTT.
 - **Intégration possible** dans une installation domotique ou un outil de supervision.
 - **Support Home-Assistant Discovery** pour les messages MQTT.
+- **Energie de charge et de décharge des batteries** calculée à partir des puissances et publiée en MQTT (`batteryChargeEnergy`, `batteryDischargeEnergy`, en kWh), utilisable dans le tableau de bord Energie de Home Assistant.
 - **Historique de charge et décharge des batteries** enregistré dans InfluxDB : énergie par heure, par jour, par mois et par an.
 
 
@@ -58,6 +59,18 @@ Quelques remarques :
 * Le jeton, l'organisation et le bucket ne sont appliqués par InfluxDB qu'à sa **première** initialisation. Pour les changer ensuite, il faut supprimer le volume `dknr_zendure_influxdb` (et donc l'historique) ou les modifier dans l'interface d'InfluxDB.
 * Pour utiliser une base InfluxDB 2 existante, renseignez ces quatre variables pour le conteneur dknr_zendure ; le conteneur InfluxDB du docker-compose (et le `depends_on` qui y fait référence) peut alors être retiré.
 * Zendure ne fournit que des puissances instantanées : la puissance de charge (`outputPackPower`) et de décharge (`packInputPower`) est intégrée toutes les 10 secondes dans deux compteurs en Wh, conservés au redémarrage de Node-RED. L'énergie n'est pas comptée pendant un arrêt de Node-RED ni quand l'onduleur n'envoie plus de données pendant 15 minutes.
+
+
+### Energie de charge et de décharge (MQTT)
+
+Zendure ne publie pas l'énergie chargée et déchargée par les batteries. dknr-zendure la calcule en intégrant toutes les 10 secondes la puissance de charge (`outputPackPower`) et de décharge (`packInputPower`), et publie deux compteurs cumulés en kWh pour chaque onduleur :
+
+| Entité MQTT | Nom | Home Assistant |
+|---|---|---|
+| `batteryChargeEnergy` | Energie chargée | `device_class: energy`, `state_class: total_increasing` |
+| `batteryDischargeEnergy` | Energie déchargée | `device_class: energy`, `state_class: total_increasing` |
+
+Les compteurs sont conservés au redémarrage de Node-RED. L'énergie n'est pas comptée pendant un arrêt de Node-RED ni quand l'onduleur n'envoie plus de données pendant 15 minutes. Ces mêmes compteurs alimentent la page **Historique**.
 
 
 ## Contribuer
