@@ -1,15 +1,24 @@
 # Required the following environement variables:
 # - DKNR_USERNAME
-# - DKNR_PASSWORD
+# - DKNR_PASSWORD (also used for InfluxDB web UI, 8 characters minimum)
 # - DKNR_SECRET
+#
+# Optional environement variables (defaults use the InfluxDB container below):
+# - DKNR_INFLUX_TOKEN (InfluxDB API token, a long random string, recommended)
+# - DKNR_INFLUX_URL (default: http://dknr_zendure_influxdb:8086)
+# - DKNR_INFLUX_ORG (default: dknr)
+# - DKNR_INFLUX_BUCKET (default: zendure)
 #
 name: DKNRZendure
 
-services: 
+services:
   dknr_zendure:
     container_name: dknr_zendure
     image: jcpd/dknr-zendure:latest
     restart: unless-stopped
+    depends_on:
+      dknr_zendure_influxdb:
+        condition: service_healthy
     deploy:
       resources:
         limits:
@@ -20,6 +29,10 @@ services:
       DKNR_USERNAME: ${DKNR_USERNAME}
       DKNR_PASSWORD: ${DKNR_PASSWORD}
       DKNR_SECRET: ${DKNR_SECRET}
+      DKNR_INFLUX_URL: ${DKNR_INFLUX_URL:-http://dknr_zendure_influxdb:8086}
+      DKNR_INFLUX_TOKEN: ${DKNR_INFLUX_TOKEN:-dknr-zendure-influxdb-token}
+      DKNR_INFLUX_ORG: ${DKNR_INFLUX_ORG:-dknr}
+      DKNR_INFLUX_BUCKET: ${DKNR_INFLUX_BUCKET:-zendure}
     ports:
       - 1880:1880
     volumes:
@@ -35,5 +48,43 @@ services:
       options:
         max-size: "20m"
         max-file: "5"
+
+  dknr_zendure_influxdb:
+    container_name: dknr_zendure_influxdb
+    image: influxdb:2.7
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+    environment:
+      TZ: Europe/Paris
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: ${DKNR_USERNAME}
+      DOCKER_INFLUXDB_INIT_PASSWORD: ${DKNR_PASSWORD}
+      DOCKER_INFLUXDB_INIT_ORG: ${DKNR_INFLUX_ORG:-dknr}
+      DOCKER_INFLUXDB_INIT_BUCKET: ${DKNR_INFLUX_BUCKET:-zendure}
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${DKNR_INFLUX_TOKEN:-dknr-zendure-influxdb-token}
+    # Uncomment to reach InfluxDB web UI from your network
+    # ports:
+    #   - 8086:8086
+    volumes:
+      - dknr_zendure_influxdb:/var/lib/influxdb2
+      - dknr_zendure_influxdb_config:/etc/influxdb2
+    healthcheck:
+      test: influx ping || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+
 volumes:
   dknr_zendure:
+  dknr_zendure_influxdb:
+  dknr_zendure_influxdb_config:

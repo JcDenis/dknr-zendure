@@ -17,13 +17,17 @@ ENV DKNR_USERNAME=admin \
       DKNR_SECRET=dkzendure \
       DKNR_REPOSITORY=https://github.com/JcDenis/dknr-zendure \
       NODE_RED_ENABLE_PROJECTS=true \
-      TZ=Europe\Paris
+      DKNR_INFLUX_URL=http://dknr_zendure_influxdb:8086 \
+      DKNR_INFLUX_TOKEN=dknr-zendure-influxdb-token \
+      DKNR_INFLUX_ORG=dknr \
+      DKNR_INFLUX_BUCKET=zendure \
+      TZ=Europe/Paris
 
 # Image label
 LABEL org.opencontainers.image.authors="Jean-Christian Paul Denis" \
       org.opencontainers.image.source="https://github.com/JcDenis/dknr-zendure" \
-      org.opencontainers.image.title="DKNR Teleinfo" \
-      org.opencontainers.image.description="Teleinfo Parser with web UI and MQTT" \
+      org.opencontainers.image.title="DKNR Zendure" \
+      org.opencontainers.image.description="Zendure inverters with web UI and MQTT" \
       org.opencontainers.image.licenses="AGPL-3.0"
 
 # Set system timezone
