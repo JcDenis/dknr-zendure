@@ -261,11 +261,12 @@
             "0fcb199df8ea7a6b",
             "4d90b065c71c0bf8",
             "d0d5971c69e4c2fe",
-            "5f68e24e94521e59"
+            "5f68e24e94521e59",
+            "8cb08ebc45f47576"
         ],
         "x": 104,
         "y": 279,
-        "w": 872,
+        "w": 1242,
         "h": 142
     },
     {
@@ -351,9 +352,9 @@
             "ace85f776ce24777",
             "2c36ae0379904be7"
         ],
-        "x": 104,
+        "x": 94,
         "y": 1359,
-        "w": 542,
+        "w": 652,
         "h": 142
     },
     {
@@ -374,6 +375,35 @@
         "y": 159,
         "w": 332,
         "h": 82
+    },
+    {
+        "id": "3e285286cd3bf34f",
+        "type": "group",
+        "z": "48135a54600713e8",
+        "name": "custom - history",
+        "style": {
+            "fill": "#6f2fa0",
+            "fill-opacity": "0.05",
+            "label": true
+        },
+        "nodes": [
+            "6581c2f8b9379137",
+            "c83b4fcf4c3f023f",
+            "fc717467815e1876",
+            "6e55659f3cdc4e92",
+            "c6158e8cffdd6946",
+            "887aab5ace00da81",
+            "84b1371308211842",
+            "db7c0055a96d9d4e",
+            "5e979e0bf4c1ad64",
+            "72aab95dccfeb59c",
+            "594bec1201f3fdfd",
+            "f77f2b447b066d65"
+        ],
+        "x": 94,
+        "y": 1539,
+        "w": 1372,
+        "h": 322
     },
     {
         "id": "df7710b4b2c4e55b",
@@ -1937,7 +1967,7 @@
         "wires": [
             [
                 "34f609c8b3c6e9ab",
-                "c83b4fcf4c3f023f"
+                "8cb08ebc45f47576"
             ]
         ]
     },
@@ -2750,7 +2780,7 @@
         "action": "replace",
         "className": "",
         "x": 1850,
-        "y": 1100,
+        "y": 1280,
         "wires": [
             []
         ]
@@ -2817,7 +2847,7 @@
         "links": [
             "6bfb1868b6a98f04"
         ],
-        "x": 935,
+        "x": 875,
         "y": 320,
         "wires": []
     },
@@ -3036,7 +3066,7 @@
         "g": "242271e7e57a5c2e",
         "name": "On docker restart, not all data are available. Just wait.",
         "info": "",
-        "x": 420,
+        "x": 1120,
         "y": 380,
         "wires": []
     },
@@ -3049,7 +3079,7 @@
         "links": [
             "2b841cb3792eb18d"
         ],
-        "x": 145,
+        "x": 265,
         "y": 1400,
         "wires": [
             [
@@ -3071,7 +3101,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 510,
+        "x": 610,
         "y": 1460,
         "wires": []
     },
@@ -3097,7 +3127,7 @@
         "topic": "",
         "payload": "",
         "payloadType": "str",
-        "x": 290,
+        "x": 210,
         "y": 1460,
         "wires": [
             [
@@ -3115,7 +3145,7 @@
         "links": [
             "6bfb1868b6a98f04"
         ],
-        "x": 585,
+        "x": 685,
         "y": 1400,
         "wires": []
     },
@@ -3137,7 +3167,7 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 470,
+        "x": 570,
         "y": 1400,
         "wires": [
             [
@@ -3158,7 +3188,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 300,
+        "x": 400,
         "y": 1400,
         "wires": [
             [
@@ -3215,41 +3245,13 @@
         "wires": []
     },
     {
-        "id": "3e285286cd3bf34f",
-        "type": "group",
-        "z": "48135a54600713e8",
-        "name": "custom - history",
-        "style": {
-            "fill": "#6f2fa0",
-            "fill-opacity": "0.05",
-            "label": true
-        },
-        "nodes": [
-            "6581c2f8b9379137",
-            "c83b4fcf4c3f023f",
-            "fc717467815e1876",
-            "6e55659f3cdc4e92",
-            "c6158e8cffdd6946",
-            "887aab5ace00da81",
-            "84b1371308211842",
-            "db7c0055a96d9d4e",
-            "5e979e0bf4c1ad64",
-            "72aab95dccfeb59c",
-            "594bec1201f3fdfd"
-        ],
-        "x": 80,
-        "y": 1540,
-        "w": 1200,
-        "h": 300
-    },
-    {
         "id": "6581c2f8b9379137",
         "type": "comment",
         "z": "48135a54600713e8",
         "g": "3e285286cd3bf34f",
         "name": "InfluxDB : DKNR_INFLUX_URL, DKNR_INFLUX_TOKEN, DKNR_INFLUX_ORG, DKNR_INFLUX_BUCKET (valeurs par défaut : conteneur dknr_zendure_influxdb)",
         "info": "Zendure ne fournit que des puissances instantanées : les puissances de charge (outputPackPower) et de décharge (packInputPower) sont intégrées toutes les 10 secondes dans deux compteurs cumulés en Wh, conservés au redémarrage (contexte default).\nLes compteurs sont écrits chaque minute dans la mesure `zendure` (tag `sn`) avec le niveau de batterie et les puissances.\nLes énergies sont calculées par InfluxDB : dernier index de chaque fenêtre moins dernier index de la fenêtre précédente.",
-        "x": 480,
+        "x": 900,
         "y": 1580,
         "wires": []
     },
@@ -3266,7 +3268,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 300,
+        "x": 440,
         "y": 1640,
         "wires": [
             [
@@ -3291,7 +3293,7 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 520,
+        "x": 660,
         "y": 1640,
         "wires": [
             [
@@ -3312,7 +3314,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 720,
+        "x": 870,
         "y": 1640,
         "wires": []
     },
@@ -3325,8 +3327,8 @@
         "links": [
             "9dad50003e57f1fc"
         ],
-        "x": 185,
-        "y": 1720,
+        "x": 285,
+        "y": 1760,
         "wires": [
             [
                 "84b1371308211842"
@@ -3351,7 +3353,7 @@
         "onceDelay": 0.1,
         "topic": "refresh",
         "x": 220,
-        "y": 1760,
+        "y": 1820,
         "wires": [
             [
                 "84b1371308211842"
@@ -3371,8 +3373,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 410,
-        "y": 1740,
+        "x": 440,
+        "y": 1760,
         "wires": [
             [
                 "db7c0055a96d9d4e"
@@ -3399,8 +3401,8 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 630,
-        "y": 1720,
+        "x": 660,
+        "y": 1700,
         "wires": [
             [
                 "5e979e0bf4c1ad64"
@@ -3420,8 +3422,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 830,
-        "y": 1740,
+        "x": 880,
+        "y": 1700,
         "wires": [
             [
                 "db7c0055a96d9d4e"
@@ -3450,8 +3452,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1060,
-        "y": 1800,
+        "x": 1130,
+        "y": 1760,
         "wires": [
             [
                 "84b1371308211842"
@@ -3475,12 +3477,43 @@
         "once": true,
         "onceDelay": "5",
         "topic": "tick",
-        "x": 140,
+        "x": 240,
+        "y": 1700,
+        "wires": [
+            [
+                "c83b4fcf4c3f023f"
+            ]
+        ]
+    },
+    {
+        "id": "f77f2b447b066d65",
+        "type": "link in",
+        "z": "48135a54600713e8",
+        "g": "3e285286cd3bf34f",
+        "name": "custom - history - port",
+        "links": [
+            "8cb08ebc45f47576"
+        ],
+        "x": 285,
         "y": 1640,
         "wires": [
             [
                 "c83b4fcf4c3f023f"
             ]
         ]
+    },
+    {
+        "id": "8cb08ebc45f47576",
+        "type": "link out",
+        "z": "48135a54600713e8",
+        "g": "242271e7e57a5c2e",
+        "name": "custom - port - history",
+        "mode": "link",
+        "links": [
+            "f77f2b447b066d65"
+        ],
+        "x": 555,
+        "y": 380,
+        "wires": []
     }
 ]
